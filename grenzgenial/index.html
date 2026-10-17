@@ -41,6 +41,7 @@ img{max-width:100%}
   --sun:#ffc533; --coral:#ff5a44; --leaf:#17a673; --on-accent:#14213d;
   --line:#14213d; --shadow:#14213d; --land:#14213d; --wave:#fbdc9a;
   --water:#7cc3ee; --ground:#f6efdc; --sky:#6cc5f0; --lilac:#c9a4f5; --stage:#14213d; --on-stage:#fff8ea; --stage-shape:#22345c; --stage-muted:#a9b9d6;
+  --ok:#0a6e48; --bad:#b42318; --on-state:#ffffff;
   --f-display:'Bagel Fat One','Arial Black',system-ui,sans-serif;
   --f-body:'Figtree',system-ui,-apple-system,'Segoe UI',sans-serif;
   --f-mono:'DM Mono',ui-monospace,Menlo,monospace;
@@ -164,9 +165,12 @@ button:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
 /* desktop: text answers as large as the flag answers (26 + 84 flag + 6 + label 20 + 10 + borders = 152px) */
 @media (min-width:720px) and (min-height:700px){.opts .opt,.opts.six .opt{min-height:152px} .opt:not(.vis){font-size:22px;padding-inline:40px 16px}}
 .opt:disabled{cursor:default;color:var(--ink)}
-.opt.right{background:var(--leaf);color:var(--on-accent)} .opt.right kbd{color:var(--on-accent)}
-.opt.wrong{background:var(--coral);color:var(--on-accent);animation:shake .25s} .opt.wrong kbd{color:var(--on-accent)}
-.opt.right .shape path,.opt.wrong .shape path{fill:var(--on-accent)}
+/* answered: white text on deep green/red (contrast > 6:1 in both themes), plus a check/cross so it never relies on colour alone */
+.opt.right{background:var(--ok);color:var(--on-state)} .opt.wrong{background:var(--bad);color:var(--on-state);animation:shake .25s}
+.opt.right kbd,.opt.wrong kbd{color:var(--on-state)}
+.opt.right .shape path,.opt.wrong .shape path{fill:var(--on-state)}
+.opt.right::after,.opt.wrong::after{position:absolute;right:10px;top:8px;font:800 18px/1 var(--f-body);color:var(--on-state)}
+.opt.right::after{content:'✓'} .opt.wrong::after{content:'✗'}
 @keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
 .fb{min-height:52px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
 .fb p{margin:0;font-weight:800;flex:1;min-width:0}
