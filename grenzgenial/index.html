@@ -161,6 +161,8 @@ button:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
 .opt .shape{height:clamp(84px,24vw,116px);width:auto;max-width:100%}
 .opt small{font-size:14px;font-weight:600;visibility:hidden;text-align:center}
 .opts.done small{visibility:visible}
+/* desktop: text answers as large as the flag answers (26 + 84 flag + 6 + label 20 + 10 + borders = 152px) */
+@media (min-width:720px) and (min-height:700px){.opts .opt,.opts.six .opt{min-height:152px} .opt:not(.vis){font-size:22px;padding-inline:40px 16px}}
 .opt:disabled{cursor:default;color:var(--ink)}
 .opt.right{background:var(--leaf);color:var(--on-accent)} .opt.right kbd{color:var(--on-accent)}
 .opt.wrong{background:var(--coral);color:var(--on-accent);animation:shake .25s} .opt.wrong kbd{color:var(--on-accent)}
