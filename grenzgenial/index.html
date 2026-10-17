@@ -64,6 +64,8 @@ body{background:var(--sea);color:var(--ink);font-family:var(--f-body);font-size:
   background-image:repeating-linear-gradient(45deg,var(--wave) 0 14px,transparent 14px 28px);background-attachment:fixed}
 .app{max-width:720px;margin:0 auto;padding-inline:16px;padding-block:24px 48px;display:flex;flex-direction:column;gap:20px}
 button{font:inherit;color:inherit;cursor:pointer}
+/* a game, not a document: no text selection and no blinking text caret (e.g. with caret browsing / F7 switched on) */
+#home,#game,#end{-webkit-user-select:none;user-select:none;caret-color:transparent}
 button:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
 .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 
@@ -416,7 +418,9 @@ const MODES={
 let best={}; try{best=JSON.parse(localStorage.getItem('grenzgenial-best'))||{}}catch(e){}
 let S=null;
 
-function show(id){for(const s of ['home','game','end'])$('#'+s).hidden=s!==id; window.scrollTo(0,0)}
+// drop focus left on a button that is gone or hidden, so no caret or ring lingers on the back arrow or the old answers
+const unfocus=()=>{const a=document.activeElement; if(a&&a!==document.body&&a.closest('#home,#game,#end'))a.blur()};
+function show(id){for(const s of ['home','game','end'])$('#'+s).hidden=s!==id; unfocus(); window.scrollTo(0,0)}
 const STARS={land:[100,300,600],tf:[60,125,185]}, STAR10=[50,100,150];
 const starsOf=k=>(STARS[k]||STAR10).filter(t=>(best[k]||0)>=t).length;
 const starRow=n=>`<span class="stars" aria-label="${n} von 3 Sternen">${'★'.repeat(n)}<i>${'★'.repeat(3-n)}</i></span>`;
@@ -483,6 +487,7 @@ function stats(){
   if(S.mode==='land')$('#stamps').innerHTML=[...S.visited].slice(-18).map(flag).join('');
 }
 function next(){
+  unfocus();
   if(S.q&&S.q.after){S.q.after()}
   const m=MODES[S.mode];
   if((S.mode==='land'&&S.lives<=0)||(m.n&&S.asked>=m.n))return finish();
