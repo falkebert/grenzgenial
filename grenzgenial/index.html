@@ -66,6 +66,27 @@ body{background:var(--sea);color:var(--ink);font-family:var(--f-body);font-size:
 button{font:inherit;color:inherit;cursor:pointer}
 /* a game, not a document: no text selection and no blinking text caret (e.g. with caret browsing / F7 switched on) */
 #home,#game,#end{-webkit-user-select:none;user-select:none;caret-color:transparent}
+/* in a game the stripes take the colour of that game's card on the home screen (Landpartie: sun) */
+body[data-mode="land"]{--sea:#ffe9b3;--wave:#ffe198}
+body[data-mode="tf"]{--sea:#ffe9b3;--wave:#ffe198}
+body[data-mode="flag"]{--sea:#d3e9ec;--wave:#bde1ed}
+body[data-mode="cap"]{--sea:#ffc9b8;--wave:#ffb19f}
+body[data-mode="shape"]{--sea:#b9dfc6;--wave:#97d3b4}
+body[data-mode="nb"]{--sea:#efdfed;--wave:#e7d2ef}
+@media (prefers-color-scheme: dark){
+:root:not([data-theme="light"]) body[data-mode="land"]{--sea:#1e262c;--wave:#34352d}
+:root:not([data-theme="light"]) body[data-mode="tf"]{--sea:#1e262c;--wave:#34352d}
+:root:not([data-theme="light"]) body[data-mode="flag"]{--sea:#14263a;--wave:#1c354b}
+:root:not([data-theme="light"]) body[data-mode="cap"]{--sea:#1e202f;--wave:#342733}
+:root:not([data-theme="light"]) body[data-mode="shape"]{--sea:#0f2633;--wave:#12353c}
+:root:not([data-theme="light"]) body[data-mode="nb"]{--sea:#1a243a;--wave:#2b304c}
+}
+:root[data-theme="dark"] body[data-mode="land"]{--sea:#1e262c;--wave:#34352d}
+:root[data-theme="dark"] body[data-mode="tf"]{--sea:#1e262c;--wave:#34352d}
+:root[data-theme="dark"] body[data-mode="flag"]{--sea:#14263a;--wave:#1c354b}
+:root[data-theme="dark"] body[data-mode="cap"]{--sea:#1e202f;--wave:#342733}
+:root[data-theme="dark"] body[data-mode="shape"]{--sea:#0f2633;--wave:#12353c}
+:root[data-theme="dark"] body[data-mode="nb"]{--sea:#1a243a;--wave:#2b304c}
 button:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
 .mono{font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;text-transform:uppercase}
 
@@ -428,6 +449,7 @@ const TINT={flag:'--sky',cap:'--coral',shape:'--leaf',nb:'--lilac',tf:'--sun'};
 let SHOWN=new Set();
 const fresh1=a=>{const f=a.filter(x=>!SHOWN.has(x));return f.length?f:a};
 function home(){
+  delete document.body.dataset.mode;
   SHOWN=new Set(); const sh=c=>(SHOWN.add(c),shape(c));
   const keys=Object.keys(MODES), total=keys.reduce((a,k)=>a+(best[k]||0),0), st=keys.reduce((a,k)=>a+starsOf(k),0);
   const rank=st>=17?'Weltenbummler':st>=12?'Vielflieger':st>=6?'Interrailer':st>=1?'Tagesausflügler':'Stubenhocker';
@@ -445,6 +467,7 @@ $('#modes').addEventListener('click',e=>{const b=e.target.closest('[data-m]'); i
 $('#back').addEventListener('click',()=>{ if(S&&S.mode==='land'&&S.asked)finish(); else home() });
 
 function start(mode){
+  document.body.dataset.mode=mode;
   S={mode,score:0,streak:0,top:0,right:0,asked:0,lives:3,queue:[],visited:new Set(),route:[],used:new Set(),lock:false,wait:false};
   if(mode==='land'){arrive(pick(fresh1(K.filter(k=>deg(k)>=2)),k=>tierW(k)*nov(k)))}
   $('#gname').textContent=MODES[mode].name;
