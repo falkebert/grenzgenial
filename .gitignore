@@ -1,0 +1,6 @@
+# Natural Earth download cache (re-fetched by build/add-countries.mjs)
+build/ne_50m_admin_0_countries.geojson
+# local backup and stale page fragments
+build/index.before.html
+build/head.html
+build/footer.html
