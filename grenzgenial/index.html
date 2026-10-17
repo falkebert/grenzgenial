@@ -66,7 +66,7 @@ body{background:var(--sea);color:var(--ink);font-family:var(--f-body);font-size:
 button{font:inherit;color:inherit;cursor:pointer}
 /* a game, not a document: no text selection and no blinking text caret (e.g. with caret browsing / F7 switched on) */
 #home,#game,#end{-webkit-user-select:none;user-select:none;caret-color:transparent}
-/* in a game the stripes take the colour of that game's card on the home screen (Landpartie: sun) */
+/* in a game the stripes take the colour of that game's card on the home screen (Weltweise: sun) */
 body[data-mode="land"]{--sea:#ffe9b3;--wave:#ffe198}
 body[data-mode="tf"]{--sea:#ffe9b3;--wave:#ffe198}
 body[data-mode="flag"]{--sea:#d3e9ec;--wave:#bde1ed}
@@ -429,7 +429,7 @@ function routeMap(route){
 }
 
 const MODES={
-  land:{name:'Landpartie',tag:'Endlos, 3 Leben, 6 Optionen',desc:'Reise von Nachbar zu Nachbar. Jede Station fragt Flagge, Hauptstadt oder Umriss. Wer die Grenze kennt, kommt weiter.'},
+  land:{name:'Weltweise',tag:'Endlos, 3 Leben, 6 Optionen',desc:'Reise von Nachbar zu Nachbar. Jede Station fragt Flagge, Hauptstadt oder Umriss. Wer die Grenze kennt, kommt weiter.'},
   flag:{name:'Fahnenflucht',tag:'10 Fragen',desc:'Flagge sehen, Land nennen. Und umgekehrt.',n:10,gens:['flagToName','nameToFlag']},
   cap:{name:'Hauptsache Hauptstadt',tag:'10 Fragen',desc:'Vom Land zur Hauptstadt und zurück.',n:10,gens:['capital','capToCountry']},
   shape:{name:'Schattenriss',tag:'10 Fragen',desc:'Länder nur am Umriss erkennen.',n:10,gens:['shapeToName','nameToShape']},
