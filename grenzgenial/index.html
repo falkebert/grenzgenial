@@ -16,6 +16,9 @@
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Grenzgenial">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preload" href="fonts/bagel-fat-one-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -32,9 +35,11 @@ body{margin:0;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,
 img{max-width:100%}
 [hidden]:not([hidden=until-found i]){display:none!important}
 /* site footer */
-.site-foot{display:flex;justify-content:center;gap:8px 18px;flex-wrap:wrap;color:var(--muted);padding-top:8px}
+.site-foot{display:flex;justify-content:center;text-align:center;gap:8px 18px;flex-wrap:wrap;color:var(--muted);padding-top:8px}
 .site-foot a{color:inherit;text-decoration:none;border-bottom:2px solid currentColor}
 .site-foot a:hover{color:var(--coral)}
+.site-foot .notes{display:contents}
+@media (max-width:520px){.site-foot{justify-content:flex-start;text-align:left} .site-foot .notes{display:block}} /* phones: notes run on as one paragraph */
 </style>
 <style>
 /* Layout: one centred game column on a sea-coloured ground; ink-outlined paper cards with hard offset shadows, passport-stamp details in mono. */
@@ -264,8 +269,7 @@ button:focus-visible{outline:3px solid var(--coral);outline-offset:3px}
   <footer class="site-foot mono">
     <span><a href="https://falkebert.de/">Impressum: Falk Ebert</a></span>
     <a href="https://github.com/falkebert/grenzgenial">Github</a>
-    <span>Kein Tracking. Rekorde nur lokal gespeichert.</span>
-    <span>Flaggen: <a href="flags/LICENSE.txt">flag-icons (MIT)</a>. Karten: <a href="https://www.naturalearthdata.com/">Natural Earth</a></span>
+    <span class="notes"><span>Kein Tracking. Rekorde nur lokal gespeichert.</span> <span>Flaggen: <a href="flags/LICENSE.txt">flag-icons (MIT)</a>. Karten: <a href="https://www.naturalearthdata.com/">Natural Earth</a>.</span></span>
   </footer>
 </div>
 
@@ -586,6 +590,8 @@ function finish(){
 home();
 // warm the cache so flags show up instantly during play
 (window.requestIdleCallback||(f=>setTimeout(f,1500)))(()=>K.forEach(c=>{new Image().src=flagSrc(c)}));
+// offline play and home-screen install
+if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>
 </body>
 </html>
