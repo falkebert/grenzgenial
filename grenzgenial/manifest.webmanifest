@@ -3,7 +3,7 @@
   "short_name": "Grenzgenial",
   "description": "Flaggen, Hauptstädte, Umrisse und Nachbarn. Reise von Land zu Land.",
   "lang": "de",
-  "id": "./",
+  "id": "/grenzgenial/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

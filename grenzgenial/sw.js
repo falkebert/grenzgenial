@@ -1,10 +1,9 @@
 // Grenzgenial service worker: precaches the whole game for offline play.
 // VERSION and ASSETS are filled in by build/make-sw.mjs.
-const VERSION = 'd2ff4c7361';
+const VERSION = '598d836f35';
 const CACHE = 'grenzgenial-' + VERSION;
 const ASSETS = ['./',
   'index.html',
-  'manifest.webmanifest',
   'favicon.svg',
   'favicon.ico',
   'apple-touch-icon.png',
@@ -229,6 +228,8 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   const req = e.request;
   if (req.method !== 'GET' || new URL(req.url).origin !== location.origin) return;
+  // manifest always from the network, so install data never goes stale
+  if (new URL(req.url).pathname.endsWith('.webmanifest')) return;
   // page: network first, so updates show up right away; cache when offline
   if (req.mode === 'navigate') {
     e.respondWith(fetch(req).then(res => {

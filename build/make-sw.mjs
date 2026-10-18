@@ -7,7 +7,7 @@ import crypto from 'node:crypto';
 const DIR = new URL('../grenzgenial/', import.meta.url);
 const SW = new URL('sw.js', DIR);
 const list = d => fs.readdirSync(new URL(d, DIR)).filter(f => /\.(svg|woff2)$/.test(f)).sort().map(f => d + f);
-const files = ['index.html', 'manifest.webmanifest', 'favicon.svg', 'favicon.ico', 'apple-touch-icon.png',
+const files = ['index.html', 'favicon.svg', 'favicon.ico', 'apple-touch-icon.png',
   'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', ...list('fonts/'), ...list('flags/')];
 
 const hash = crypto.createHash('sha256');
