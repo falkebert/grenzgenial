@@ -16,6 +16,9 @@
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="apple-mobile-web-app-title" content="Grenzgenial">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <link rel="preload" href="fonts/bagel-fat-one-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/figtree-latin.woff2" as="font" type="font/woff2" crossorigin>
 <style>
@@ -586,6 +589,8 @@ function finish(){
 home();
 // warm the cache so flags show up instantly during play
 (window.requestIdleCallback||(f=>setTimeout(f,1500)))(()=>K.forEach(c=>{new Image().src=flagSrc(c)}));
+// offline play and home-screen install
+if('serviceWorker' in navigator) addEventListener('load',()=>navigator.serviceWorker.register('sw.js').catch(()=>{}));
 </script>
 </body>
 </html>
