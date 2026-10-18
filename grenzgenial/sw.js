@@ -1,6 +1,6 @@
 // Grenzgenial service worker: precaches the whole game for offline play.
 // VERSION and ASSETS are filled in by build/make-sw.mjs.
-const VERSION = 'b09fc071f2';
+const VERSION = 'd2ff4c7361';
 const CACHE = 'grenzgenial-' + VERSION;
 const ASSETS = ['./',
   'index.html',
